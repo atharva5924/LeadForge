@@ -2,7 +2,6 @@
 export const buildFilterQuery = (filters, userId) => {
   const query = { created_by: userId };
 
-  // String fields with contains/equals operators
   if (filters.email) {
     if (filters.email.contains) {
       query.email = { $regex: filters.email.contains, $options: "i" };
@@ -27,7 +26,6 @@ export const buildFilterQuery = (filters, userId) => {
     }
   }
 
-  // Enum fields with equals/in operators
   if (filters.status) {
     if (filters.status.in && Array.isArray(filters.status.in)) {
       query.status = { $in: filters.status.in };
@@ -44,7 +42,6 @@ export const buildFilterQuery = (filters, userId) => {
     }
   }
 
-  // Number fields with equals/gt/lt/between operators
   if (filters.score) {
     if (filters.score.equals !== undefined) {
       query.score = filters.score.equals;
@@ -95,7 +92,6 @@ export const buildFilterQuery = (filters, userId) => {
     }
   }
 
-  // Date fields with on/before/after/between operators
   if (filters.created_at) {
     if (filters.created_at.on) {
       const date = new Date(filters.created_at.on);
@@ -148,7 +144,6 @@ export const buildFilterQuery = (filters, userId) => {
     }
   }
 
-  // Boolean field
   if (filters.is_qualified !== undefined) {
     query.is_qualified = filters.is_qualified;
   }

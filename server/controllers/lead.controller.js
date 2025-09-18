@@ -18,7 +18,6 @@ const getLeads = async (req, res) => {
     const sortBy = req.query.sortBy || "created_at";
     const sortOrder = req.query.sortOrder === "asc" ? 1 : -1;
 
-    // Parse filters from query string
     let filters = {};
     if (req.query.filters) {
       try {
@@ -32,15 +31,12 @@ const getLeads = async (req, res) => {
 
     const query = buildFilterQuery(filters, req.user._id);
 
-    // Get total count for pagination
     const total = await Lead.countDocuments(query);
     const totalPages = Math.ceil(total / limit);
 
-    // Build sort object
     const sort = {};
     sort[sortBy] = sortOrder;
 
-    // Get leads with pagination and sorting
     const leads = await Lead.find(query)
       .sort(sort)
       .skip(skip)
@@ -72,7 +68,6 @@ const getSingleLead = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Validate ObjectId format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).json({
         message: "Invalid lead ID format",
@@ -116,14 +111,12 @@ const updateLead = async (req, res) => {
 
     const { id } = req.params;
 
-    // Validate ObjectId format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).json({
         message: "Invalid lead ID format",
       });
     }
 
-    // Check if lead exists and belongs to user
     const existingLead = await Lead.findOne({
       _id: id,
       created_by: req.user._id,
@@ -135,7 +128,6 @@ const updateLead = async (req, res) => {
       });
     }
 
-    // Check if email is being changed and if it conflicts with existing leads
     if (req.body.email && req.body.email !== existingLead.email) {
       const emailConflict = await Lead.findOne({
         email: req.body.email,
@@ -152,12 +144,10 @@ const updateLead = async (req, res) => {
 
     const updateData = { ...req.body };
 
-    // Convert date string to Date object if provided
     if (req.body.last_activity_at) {
       updateData.last_activity_at = new Date(req.body.last_activity_at);
     }
 
-    // Update the lead
     const updatedLead = await Lead.findByIdAndUpdate(
       id,
       { $set: updateData },
@@ -213,7 +203,6 @@ const createLead = async (req, res) => {
       });
     }
 
-    // Check if email already exists for this user
     const existingLead = await Lead.findOne({
       email: req.body.email,
       created_by: req.user._id,
@@ -230,7 +219,6 @@ const createLead = async (req, res) => {
       created_by: req.user._id,
     };
 
-    // Convert date string to Date object if provided
     if (req.body.last_activity_at) {
       leadData.last_activity_at = new Date(req.body.last_activity_at);
     }
@@ -238,7 +226,6 @@ const createLead = async (req, res) => {
     const lead = new Lead(leadData);
     await lead.save();
 
-    // Return created lead without sensitive data
     const createdLead = await Lead.findById(lead._id).select(
       "-created_by -__v"
     );
@@ -250,14 +237,12 @@ const createLead = async (req, res) => {
   } catch (error) {
     console.error("Error creating lead:", error);
 
-    // Handle duplicate key error (email uniqueness)
     if (error.code === 11000) {
       return res.status(409).json({
         message: "A lead with this email already exists",
       });
     }
 
-    // Handle validation errors from Mongoose
     if (error.name === "ValidationError") {
       const validationErrors = Object.values(error.errors).map((err) => ({
         field: err.path,
@@ -279,7 +264,6 @@ const deleteLead = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Validate ObjectId format
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).json({
         message: "Invalid lead ID format",
@@ -320,7 +304,6 @@ const summaryStats = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    // Aggregate pipeline to get comprehensive stats
     const stats = await Lead.aggregate([
       { $match: { created_by: userId } },
       {

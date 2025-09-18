@@ -1,6 +1,6 @@
-import express from "express";  
-import {body, query} from "express-validator";
-import {authMiddleware} from "../middlewares/auth.middleware.js";
+import express from "express";
+import { body, query } from "express-validator";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 import {
   createLead,
   deleteLead,
@@ -11,9 +11,9 @@ import {
 } from "../controllers/lead.controller.js";
 const router = express.Router();
 
-// Apply auth middleware to all routes
 router.use(authMiddleware);
 
+// get leads
 router.get(
   "/",
   [
@@ -48,10 +48,10 @@ router.get(
   getLeads
 );
 
-// GET /leads/:id - Get single lead by ID
+// get single lead
 router.get("/:id", getSingleLead);
 
-// POST /leads - Create new lead
+// create lead
 router.post(
   "/",
   [
@@ -135,7 +135,7 @@ router.post(
   createLead
 );
 
-// PUT /leads/:id - Update existing lead
+// update lead
 router.put(
   "/:id",
   [
@@ -227,10 +227,10 @@ router.put(
   updateLead
 );
 
-// DELETE /leads/:id - Delete lead
+// delete lead
 router.delete("/:id", deleteLead);
 
-// GET /leads/stats/summary - Get leads statistics
+// get summary stats
 router.get("/stats/summary", summaryStats);
 
 export default router;

@@ -16,16 +16,11 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://lead-forge-one.vercel.app"
 ];
-// Middleware
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin:"https://lead-forge-frontend.vercel.app", "http://localhost:3000", "https://lead-forge-one.vercel.app"
-//     credentials: true,
-//   })
-// );
+
 app.use(
   cors({
     origin: function(origin, callback) {
@@ -39,31 +34,18 @@ app.use(
   })
 );
 
-// // Connect to MongoDB
-// mongoose
-//   .connect(process.env.MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch((err) => console.error("MongoDB connection error:", err));
-
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/leads", leadRoutes);
 
-// Health check
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Server is running" });
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });

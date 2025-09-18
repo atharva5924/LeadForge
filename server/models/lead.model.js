@@ -85,8 +85,6 @@ const leadSchema = new Schema(
   }
 );
 
-// Create index for better search performance
-// leadSchema.index({ email: 1 });
 leadSchema.index({ company: 1 });
 leadSchema.index({ status: 1 });
 leadSchema.index({ source: 1 });

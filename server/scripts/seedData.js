@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import connectDB from "../db/index.js";
 import dotenv from "dotenv";
 import { User } from "../models/user.model.js";
@@ -7,7 +6,6 @@ dotenv.config({
   path: "./.env",
 });
 
-// Sample data arrays for generating realistic leads
 const companies = [
   "TechCorp Inc",
   "Digital Solutions Ltd",
@@ -345,14 +343,12 @@ const sources = [
 ];
 const statuses = ["new", "contacted", "qualified", "lost", "won"];
 
-// Function to generate random phone number
 const generatePhoneNumber = () => {
   return `+1-${Math.floor(Math.random() * 900) + 100}-${
     Math.floor(Math.random() * 900) + 100
   }-${Math.floor(Math.random() * 9000) + 1000}`;
 };
 
-// Function to generate random email
 const generateEmail = (firstName, lastName, company) => {
   const domains = [
     "gmail.com",
@@ -366,7 +362,6 @@ const generateEmail = (firstName, lastName, company) => {
   return `${emailPrefix}@${domain}`;
 };
 
-// Function to generate random date within last 90 days
 const generateRandomDate = (daysBack = 90) => {
   const now = new Date();
   const pastDate = new Date(
@@ -381,15 +376,13 @@ const seedDatabase = async () => {
     await connectDB();
     console.log("Connected to MongoDB successfully");
 
-    // Clear existing data
     console.log("Clearing existing data...");
     await User.deleteMany({});
     await Lead.deleteMany({});
     console.log("Existing data cleared");
 
-    // Create test user
     console.log("Creating test user...");
-    const hashedPassword = await bcrypt.hash("testuser123", 12);
+
     const testUser = new User({
       email: "test@example.com",
       password: "testuser123",
@@ -399,10 +392,9 @@ const seedDatabase = async () => {
     await testUser.save();
     console.log("✅ Test user created: test@example.com / testuser123");
 
-    // Generate 150+ leads with realistic data
     console.log("Generating leads...");
     const leads = [];
-    const totalLeads = 175; // Generate 175 leads
+    const totalLeads = 175; 
 
     for (let i = 1; i <= totalLeads; i++) {
       const firstName =
@@ -412,7 +404,6 @@ const seedDatabase = async () => {
       const city = cities[Math.floor(Math.random() * cities.length)];
       const state = states[Math.floor(Math.random() * states.length)];
 
-      // Generate weighted random status (more new leads)
       let status;
       const statusRand = Math.random();
       if (statusRand < 0.4) status = "new";
@@ -421,38 +412,36 @@ const seedDatabase = async () => {
       else if (statusRand < 0.95) status = "won";
       else status = "lost";
 
-      // Generate score based on status
       let score;
       switch (status) {
         case "new":
-          score = Math.floor(Math.random() * 40) + 10; // 10-50
+          score = Math.floor(Math.random() * 40) + 10; 
           break;
         case "contacted":
-          score = Math.floor(Math.random() * 40) + 30; // 30-70
+          score = Math.floor(Math.random() * 40) + 30; 
           break;
         case "qualified":
         case "won":
-          score = Math.floor(Math.random() * 30) + 70; // 70-100
+          score = Math.floor(Math.random() * 30) + 70; 
           break;
         case "lost":
-          score = Math.floor(Math.random() * 30) + 5; // 5-35
+          score = Math.floor(Math.random() * 30) + 5;
           break;
         default:
           score = Math.floor(Math.random() * 101);
       }
 
-      // Generate lead value based on status and score
       let leadValue;
       if (status === "won") {
-        leadValue = Math.floor(Math.random() * 80000) + 20000; // $20k-$100k for won leads
+        leadValue = Math.floor(Math.random() * 80000) + 20000; 
       } else if (status === "qualified") {
-        leadValue = Math.floor(Math.random() * 50000) + 10000; // $10k-$60k for qualified
+        leadValue = Math.floor(Math.random() * 50000) + 10000; 
       } else if (status === "contacted") {
-        leadValue = Math.floor(Math.random() * 30000) + 5000; // $5k-$35k for contacted
+        leadValue = Math.floor(Math.random() * 30000) + 5000; 
       } else if (status === "lost") {
-        leadValue = Math.floor(Math.random() * 10000) + 1000; // $1k-$11k for lost
+        leadValue = Math.floor(Math.random() * 10000) + 1000; 
       } else {
-        leadValue = Math.floor(Math.random() * 20000) + 2000; // $2k-$22k for new
+        leadValue = Math.floor(Math.random() * 20000) + 2000; 
       }
 
       const lead = {
@@ -470,19 +459,17 @@ const seedDatabase = async () => {
         is_qualified:
           status === "qualified" || status === "won" || Math.random() > 0.7,
         created_by: testUser._id,
-        created_at: generateRandomDate(90), // Created within last 90 days
-        last_activity_at: Math.random() > 0.3 ? generateRandomDate(30) : null, // 70% have recent activity
+        created_at: generateRandomDate(90), 
+        last_activity_at: Math.random() > 0.3 ? generateRandomDate(30) : null, 
       };
 
       leads.push(lead);
 
-      // Show progress every 25 leads
       if (i % 25 === 0) {
         console.log(`Generated ${i}/${totalLeads} leads...`);
       }
     }
 
-    // Insert leads in batches for better performance
     console.log("Inserting leads into database...");
     const batchSize = 25;
     for (let i = 0; i < leads.length; i += batchSize) {
@@ -495,7 +482,6 @@ const seedDatabase = async () => {
       );
     }
 
-    // Generate statistics
     const statsArray = await Lead.getStatistics(testUser._id);
     const stats = statsArray[0] || {};
 
@@ -523,15 +509,6 @@ const seedDatabase = async () => {
     process.exit(1);
   }
 };
-
-// Run the seed function
-// if (require.main === module) {
-//   seedDatabase();
-// }
-
-// if (import.meta.url === process.argv[1] || import.meta.url === `file://${process.argv[1]}`) {
-//   seedDatabase();
-// }
 
 seedDatabase().catch((err) => {
   console.error("Seeding failed:", err);
