@@ -58,7 +58,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/auth/logout");
+      await axios.post("/auth/logout", {}, { withCredentials: true });
       setUser(null);
       toast.success("Logged out successfully!");
     } catch (error) {

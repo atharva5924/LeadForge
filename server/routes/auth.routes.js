@@ -5,7 +5,7 @@ import {
   getCurrentUser,
 } from "../controllers/auth.controller.js";
 import { body } from "express-validator";
-import {authMiddleware} from "../middlewares/auth.middleware.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
@@ -30,7 +30,11 @@ router.post(
 
 // Logout
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true, 
+    sameSite: "none", 
+  });
   res.status(200).json({ message: "Logout successful" });
 });
 
