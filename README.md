@@ -132,14 +132,39 @@ Seeding the database helps get the application up and running quickly with reali
 
 ---
 
+## Project Structure
+
+```bash
+ims-backend/
+│
+├── controllers/
+├── middlewares/
+├── models/
+├── routes/
+├── db/
+├── scripts/
+├── uploads/ (optional if storing locally)
+├── .env
+├── server.js
+│
+client/
+│
+├── src/
+│   ├── components/
+│   └── App.jsx
+├── index.html
+├── tailwind.config.js
+├── vite.config.js
+```
+
+---
+
 # 📊 Database Schema
 
 This project uses **MongoDB** with **Mongoose** to manage data.  
 Below are the details of the collections and their fields.
 
 For complete clarity, see the schema code in [`scripts/seedData.js`](./server/scripts/seedData.js).
-
----
 
 ## 🧑 User Schema
 
@@ -154,13 +179,9 @@ The `User` collection stores information about application users.
 | `createdAt` | Date    | Auto     | ❌ No  | Automatically set by Mongoose timestamps |
 | `updatedAt` | Date    | Auto     | ❌ No  | Automatically updated on modifications |
 
----
-
 ## 📊 Lead Database Schema
 
 The `Lead` collection stores all lead data for tracking and management within the CRM.
-
-## **Schema Overview**
 
 | Field            | Type      | Required | Default   | Description |
 |-------------------|-----------|----------|-----------|-------------|
@@ -229,19 +250,19 @@ Register new users with role assignment.
 
 ---
 
-### 🔒 Sidebar
-
-Sidebar which toggles on clicking the hamburger menu and navigate to different option easily.
-
-![Reset Password](./screenshots/sidebar.png)
-
----
-
 ### 📊 Dashboard
 
 Overview of leads with stats and recent activity.  
 
 ![Dashboard](./screenshots/dashboard.png)
+
+---
+
+### 🔒 Sidebar
+
+Sidebar which toggles on clicking the hamburger menu and navigate to different option easily.
+
+![Reset Password](./screenshots/sidebar.png)
 
 ---
 
@@ -270,6 +291,15 @@ Delete Leads
 View and update user profile and preferences.  
 
 ![Profile](./screenshots/profile.png)
+
+---
+
+## 🧪 Testing
+
+Use [Postman](https://www.postman.com/) or a similar API client to test the backend API routes.
+
+- ✅ Make sure to **enable cookies** when testing **protected routes** like product CRUD operations.
+- 🔐 Authenticated routes rely on `HTTP-only` cookies for session management.
 
 ---
 
