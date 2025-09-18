@@ -97,16 +97,38 @@ Frontend runs at `http://localhost:3000/`
 
 ---
 
-### 5. Database Seeding
+## Database Seeding
 
-Seed script runs automatically on backend DB initialization if no users found.
+This project includes a seed data script to quickly populate the database with sample leads, users, and related data for testing and development purposes.
 
-To seed manually (inside backend container):
+### How to Seed Data
+
+1. Ensure your database (MongoDB/MySQL/etc.) is running and accessible.
+
+2. Run the seed script located at:
 
 ```bash
-docker-compose exec backend sh
-node seeds/seed.js # or run your specific seed command
+/server/scripts/seedData.js
 ```
+Adjust path if needed depending on repository structure)
+
+3. To execute the seed script:
+
+- For Node.js (MongoDB):
+  ```
+  node server/scripts/seedData.js
+  ```
+
+4. The seed script inserts initial test data including:
+- Sample leads with various statuses and values
+- User accounts with roles and secure hashed passwords
+- Associated metadata needed for app functionality
+
+5. After seeding, restart the backend server if it was running to reflect the updated data.
+
+---
+
+Seeding the database helps get the application up and running quickly with realistic sample data, enabling faster testing and development.
 
 ---
 
@@ -129,75 +151,26 @@ For complete clarity, see the schema code in [`config/database.js`](./backend/co
 ## 📦 API Endpoints
 
 ### Authentication
+| Method | Endpoint                          | Description                           |
+| ------ | -------------------------------- | ------------------------------------- |
+| POST   | `/api/auth/register`              | Register a new user                   |
+| POST   | `/api/auth/login`                 | User login                           |
+| POST   | `/api/auth/logout`                | Logout user (clears auth token)     |
+| GET    | `/api/auth/me`                   | Get current logged-in user profile   |
 
-| Method | Endpoint                   | Description                  |
-| ------ | -------------------------- | ---------------------------- |
-| POST   | `/api/auth/register`       | Register new user            |
-| POST   | `/api/auth/login`          | Login user                    |
-| GET    | `/api/auth/profile`        | Get user profile (Auth)       |
-| POST   | `/api/auth/request-password-reset` | Request a password reset link |
-| POST   | `/api/auth/reset-password` | Reset password using token    |
+### Leads
+| Method | Endpoint                    | Description                          |
+| ------ | --------------------------- | ------------------------------------ |
+| GET    | `/api/leads`                | Get list of leads (filterable)      |
+| GET    | `/api/leads/:id`            | Get lead details by ID               |
+| POST   | `/api/leads`                | Create a new lead                   |
+| PUT    | `/api/leads/:id`            | Update lead by ID                   |
+| DELETE | `/api/leads/:id`            | Delete lead by ID                   |
 
-
-### Products
-
-| Method | Endpoint                           | Description                                   |
-| ------ | ---------------------------------- | --------------------------------------------- |
-| GET    | `/api/products`                    | List products (filter & pagination)           |
-| GET    | `/api/products/:id`                | Get product by ID                             |
-| POST   | `/api/products`                    | Create new product (Admin only)               |
-| GET    | `/api/products/recommendations`    | Get personalized product recommendations (Auth) |
-| PUT    | `/api/products/:id`                | Update existing product (Admin only)          |
-| DELETE | `/api/products/:id`                | Delete product (Admin only)                   |
-| POST   | `/api/products/ai-generate-description` | Generate AI-based product description (Admin only) |
-
-### Investments
-
-| Method | Endpoint                       | Description               |
-| ------ | ------------------------------ | ------------------------- |
-| POST   | `/api/investments`             | Create investment         |
-| GET    | `/api/investments`             | List user investments     |
-| GET    | `/api/investments/portfolio`   | Get portfolio summary     |
-| GET    | `/api/investments/portfolio/insights` | Get detailed portfolio insights |
-
-### Transaction Logs
-
-| Method | Endpoint                              | Description                    |
-| ------ | ------------------------------------- | ------------------------------ |
-| GET    | `/api/transaction-logs`               | Get user transaction logs      |
-| GET    | `/api/transaction-logs/error-summary` | Get AI-generated error summary |
-
----
-
-## 🐳 Docker & DevOps
-
-### Dockerfiles included for backend and frontend
-
-- Backend exposes `/health` endpoint for status check
-- Logs are viewable using `docker logs <container>`
-
-### Sample docker-compose.yml snippet
-
----
-
-## 🧪 Testing
-
-- Backend: Jest with 75%+ coverage on API/controller modules
-- Frontend: Jest + React Testing Library for critical pages/components
-
-Run backend tests:
-
-```bash
-cd .\server\
-npm test
-```
-
-Run frontend tests:
-
-```bash
-cd .\client\
-npm test
-```
+### Dashboard
+| Method | Endpoint                  | Description                          |
+| ------ | ------------------------- | ------------------------------------ |
+| GET    | `/api/dashboard/stats`    | Get lead statistics for dashboard    |
 
 ---
 
@@ -205,118 +178,46 @@ npm test
 
 *Note: The data shown in the screenshots below is pre-inserted for demonstrating features and ensuring a clear visual representation.*
 
-### 🏠 Landing Page
-
-Welcome page introducing GripInvest.  
-
-![Landing](./screenshots/landing.png)
+### 🔐 Login
+User authentication with JWT tokens.  
+![Login](./screenshots/login.png)
 
 ---
 
-### 🧑‍💼 Login Page
-
-User login interface for authenticated access.  
-
-![Login](./screenshots/loginPage.png)
-
----
-
-### 📝 Signup Page
-
-User registration screen with password feedback.  
-
-![Signup](./screenshots/signupPage.png)
-
----
-
-### 🔑 Forgot Password
-
-Request password reset via email.  
-
-![Forgot Password](./screenshots/forgotPassword.png)
-
+### 📝 Register
+Register new users with role assignment.  
+![Register](./screenshots/register.png)
 
 ---
 
 ### 🔒 Reset Password
-
-Set a new password using email link token.  
-
+Reset password securely using email link tokens.  
 ![Reset Password](./screenshots/resetPassword.png)
 
 ---
 
 ### 📊 Dashboard
-
-Your personalized investment portfolio overview.  
-
+Overview of leads with stats and recent activity.  
 ![Dashboard](./screenshots/dashboard.png)
 
 ---
 
-### 📦 Products
+### 🗂 Leads Management
+View, add, update, or delete leads with status indicators.  
+![Leads List](./screenshots/leadsList.png)
 
-Browse available investment products with filtering.  
+Create Leads
 
-![Products1](./screenshots/productsPage1.png)
+Update Leads
 
-![Products2](./screenshots/productsPage2.png)
+Delete Leads
 
----
-
-### 💼 Investments
-
-Track and manage your investments.  
-
-Portfolio Overview
-
-![Investments1](./screenshots/investmentsPage1.png)
-
-My Investments
-
-![Investments1](./screenshots/investmentsPage2.png)
-
-AI Insights
-
-![Investments1](./screenshots/investmentsPage3.png)
 
 ---
 
-### 📋 Transaction Logs
-
-View detailed logs of API activity and errors.
-
-![Transaction Logs1](./screenshots/transactionLogs1.png)
-
-![Transaction Logs2](./screenshots/transactionLogs2.png)
-
----
-
-### 👤 Profile
-
-Manage your user profile and risk preferences.  
-
-![Profile](./screenshots/profilePage.png)
-
----
-
-### 🛠️ Admin Products
-
-Admin panel to create/update/delete products.  
-
-![Admin Products](./screenshots/adminProducts1.png)
-
-Create Products
-
-![Admin Products](./screenshots/adminProducts2.png)
-
-Edit Products
-
-![Admin Products](./screenshots/adminProducts3.png)
-
-Delete Products
-
-![Admin Products](./screenshots/adminProducts4.png)
+### ⚙️ Settings/Profile
+View and update user profile and preferences.  
+![Profile](./screenshots/profile.png)
 
 ---
 
@@ -337,9 +238,10 @@ CSE Undergrad @ IIIT Nagpur
 
 ## Notes
 
-- Always ensure your backend is running and accessible at the API_BASE_URL configured.
-- Authentication tokens are stored securely in localStorage.
-- Admin role controls access to product management features.
+- Ensure backend server is running and API base URL is correctly configured.
+- For frontend UI, toggle sidebar via hamburger menu and navigate using sidebar links.
+- Authentication tokens are securely stored and managed on the client side.
+- Use API testing tools like Postman with JWT tokens to test endpoints.
 - Use Postman or similar tools to test API endpoints; include JWT tokens in the header.
 
 ---
