@@ -8,9 +8,9 @@ A full-stack Lead Management System built with React, Tailwind CSS, React Router
 
 ### 🚀 Live Demo
 
-🔗 [Deployed Live on Vercel](https://inventory-pilot-frontend.vercel.app/)<br/>
+🔗 [Deployed Live on Vercel](https://lead-forge-frontend-git-main-atharva-s-projects-79c2a7ce.vercel.app/)<br/>
 
-📡 [Backend Deploy Link](https://inventorypilot-backend-ib2e.onrender.com)
+📡 [Backend Deploy Link](https://leadforge-backend.onrender.com)
 
 ---
 
