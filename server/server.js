@@ -20,7 +20,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://lead-forge-frontend-git-main-atharva-s-projects-79c2a7ce.vercel.app/"
+        ? "https://lead-forge-frontend.vercel.app/"
         : "http://localhost:3000",
     credentials: true,
   })
