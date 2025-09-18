@@ -5,8 +5,7 @@ import App from "./App.jsx";
 import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <>
+  <StrictMode>
     <App />
     <Toaster
       position="top-right"
@@ -18,6 +17,5 @@ createRoot(document.getElementById("root")).render(
         },
       }}
     />
-  {/* // </StrictMode> */}
-  </>
+  </StrictMode>
 );

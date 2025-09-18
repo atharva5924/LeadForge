@@ -124,65 +124,18 @@ const Dashboard = () => {
           color="bg-yellow-500"
         />
       </div>
-
-      {/* Additional Stats */}
-      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-md shadow p-6 ">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Conversion Rate
-          </h3>
-          <div className="flex items-center">
-            <ArrowUpIcon className="h-8 w-8 text-green-500 mr-3" />
-            <div>
-              <span className="text-2xl font-bold text-gray-900">
-                {stats.conversionRate}%
-              </span>
-              <p className="text-sm text-gray-600">Leads converted to won</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-md shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Quick Stats
-          </h3>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm text-gray-600">Average Lead Value:</span>
-              <span className="text-sm font-medium">
-                $
-                {stats.totalLeads > 0
-                  ? (stats.totalValue / stats.totalLeads).toFixed(2)
-                  : "0"}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-gray-600">Qualification Rate:</span>
-              <span className="text-sm font-medium">
-                {stats.totalLeads > 0
-                  ? ((stats.qualifiedLeads / stats.totalLeads) * 100).toFixed(1)
-                  : 0}
-                %
-              </span>
-            </div>
-          </div>
-        </div>
-        
-      </div> */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-md shadow p-6 flex flex-col justify-center items-center text-center">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Conversion Rate
           </h3>
           <div className="flex flex-col items-center">
-            {/* Arrow and Percentage */}
             <div className="flex items-center justify-center mb-2">
               <ArrowUpIcon className="h-8 w-8 text-green-500 mr-2" />
               <span className="text-2xl font-bold text-gray-900">
                 {stats.conversionRate}%
               </span>
             </div>
-            {/* Subtitle */}
             <p className="text-sm text-gray-600">Leads converted to won</p>
           </div>
         </div>
@@ -221,8 +174,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Recent Leads */}
       <div className="bg-white rounded-md shadow p-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Recent Leads</h3>

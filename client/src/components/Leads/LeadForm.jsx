@@ -108,7 +108,6 @@ const LeadForm = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Personal Information */}
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
             Personal Information
@@ -185,7 +184,6 @@ const LeadForm = () => {
           </div>
         </div>
 
-        {/* Company Information */}
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
             Company Information
@@ -246,7 +244,6 @@ const LeadForm = () => {
           </div>
         </div>
 
-        {/* Lead Details */}
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-4">
             Lead Details

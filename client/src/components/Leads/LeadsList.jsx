@@ -267,7 +267,6 @@ const LeadsList = () => {
           <span>Add Lead</span>
         </Link>
       </div>
-      {/* Filters Section */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Filters</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -387,7 +386,6 @@ const LeadsList = () => {
           </div>
         )}
       </div>
-      {/* Data Grid Section */}
       <div className="bg-white rounded-lg shadow-md p-4">
         <div className="ag-theme-alpine" style={{ height: 600, width: "100%" }}>
           <AgGridReact
@@ -401,7 +399,6 @@ const LeadsList = () => {
             theme={themeBalham}
           />
         </div>
-        {/* Pagination Controls */}
         <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-700">Rows per page:</span>

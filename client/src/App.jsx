@@ -18,17 +18,14 @@ import LeadForm from "./components/Leads/LeadForm";
 import Layout from "./components/Layout/Layout";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 
-// Configure axios defaults
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-// Add request interceptor to handle errors globally
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && window.location.pathname !== "/login") {
-      // Handle unauthorized access
       window.location.href = "/login";
     }
     return Promise.reject(error);
