@@ -132,19 +132,54 @@ Seeding the database helps get the application up and running quickly with reali
 
 ---
 
-## 📄 Database Schema
+# 📊 Database Schema
 
-This project uses predefined SQL schemas for all tables to ensure data consistency and integrity.
+This project uses **MongoDB** with **Mongoose** to manage data.  
+Below are the details of the collections and their fields.
 
-- The database schema includes tables for `users`, `investment_products`, `investments`, and `transaction_logs`.
-- The full SQL schema definitions are part of the backend initialization script located in `config/database.js` which creates tables if they do not exist.
-- Key schema features:
-  - User management with role-based access (`users` table)
-  - Detailed investment product catalog (`investment_products` table)
-  - User investments with transaction history (`investments` table)
-  - Comprehensive API transaction logging (`transaction_logs` table)
+For complete clarity, see the schema code in [`scripts/seedData.js`](./server/scripts/seedData.js).
 
-For complete clarity, see the schema code in [`config/database.js`](./backend/config/database.js).
+---
+
+## 🧑 User Schema
+
+The `User` collection stores information about application users.
+
+| Field      | Type     | Required | Unique | Description |
+|------------|----------|----------|--------|-------------|
+| `firstName` | String  | ✅ Yes   | ❌ No  | User's first name |
+| `lastName`  | String  | ✅ Yes   | ❌ No  | User's last name |
+| `email`     | String  | ✅ Yes   | ✅ Yes | User's email address (lowercased & trimmed) |
+| `password`  | String  | ✅ Yes   | ❌ No  | Encrypted user password |
+| `createdAt` | Date    | Auto     | ❌ No  | Automatically set by Mongoose timestamps |
+| `updatedAt` | Date    | Auto     | ❌ No  | Automatically updated on modifications |
+
+---
+
+## 📊 Lead Database Schema
+
+The `Lead` collection stores all lead data for tracking and management within the CRM.
+
+## **Schema Overview**
+
+| Field            | Type      | Required | Default   | Description |
+|-------------------|-----------|----------|-----------|-------------|
+| `id`              | ObjectId  | ✅ Yes    | Auto      | Unique identifier for each lead |
+| `first_name`      | String    | ✅ Yes    | -         | Lead's first name |
+| `last_name`       | String    | ✅ Yes    | -         | Lead's last name |
+| `email`           | String    | ✅ Yes    | -         | Unique email address of the lead |
+| `phone`           | String    | ✅ Yes    | -         | Contact phone number |
+| `company`         | String    | ❌ No     | -         | Company the lead is associated with |
+| `city`            | String    | ❌ No     | -         | Lead's city |
+| `state`           | String    | ❌ No     | -         | Lead's state |
+| `source`          | Enum      | ✅ Yes    | -         | Source of lead acquisition. <br>**Options:** `website`, `facebook_ads`, `google_ads`, `referral`, `events`, `other` |
+| `status`          | Enum      | ✅ Yes    | `new`     | Current status of the lead. <br>**Options:** `new`, `contacted`, `qualified`, `lost`, `won` |
+| `score`           | Integer   | ❌ No     | `0`       | Score between **0–100** representing lead quality |
+| `lead_value`      | Number    | ❌ No     | `0`       | Estimated revenue from this lead |
+| `last_activity_at`| Date      | ❌ No     | `null`    | Timestamp of the last activity with this lead |
+| `is_qualified`    | Boolean   | ❌ No     | `false`   | Whether the lead has been qualified |
+| `created_at`      | Date      | Auto      | -         | Automatically set when the lead is created |
+| `updated_at`      | Date      | Auto      | -         | Automatically updated when the lead is modified |
 
 ---
 
@@ -179,46 +214,61 @@ For complete clarity, see the schema code in [`config/database.js`](./backend/co
 *Note: The data shown in the screenshots below is pre-inserted for demonstrating features and ensuring a clear visual representation.*
 
 ### 🔐 Login
+
 User authentication with JWT tokens.  
+
 ![Login](./screenshots/login.png)
 
 ---
 
 ### 📝 Register
+
 Register new users with role assignment.  
+
 ![Register](./screenshots/register.png)
 
 ---
 
-### 🔒 Reset Password
-Reset password securely using email link tokens.  
-![Reset Password](./screenshots/resetPassword.png)
+### 🔒 Sidebar
+
+Sidebar which toggles on clicking the hamburger menu and navigate to different option easily.
+
+![Reset Password](./screenshots/sidebar.png)
 
 ---
 
 ### 📊 Dashboard
+
 Overview of leads with stats and recent activity.  
+
 ![Dashboard](./screenshots/dashboard.png)
 
 ---
 
 ### 🗂 Leads Management
-View, add, update, or delete leads with status indicators.  
+
+View, add, update, or delete leads with status indicators. 
+
 ![Leads List](./screenshots/leadsList.png)
 
 Create Leads
+
 ![Leads List](./screenshots/create.png)
 
 Update Leads
+
 ![Leads List](./screenshots/update.png)
 
 Delete Leads
+
 ![Leads List](./screenshots/delete.png)
 
 ---
 
 ### ⚙️ Settings/Profile
+
 View and update user profile and preferences.  
+
 ![Profile](./screenshots/profile.png)
 
 ---
