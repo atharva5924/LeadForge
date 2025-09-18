@@ -12,7 +12,7 @@ const Layout = ({ user, onLogout }) => {
   return (
     <div className="min-h-screen bg-gray-100">
       
-      <Navbar user={user} onLogout={onLogout} onToggleSidebar={toggleSidebar} />
+      <Navbar onLogout={onLogout} onToggleSidebar={toggleSidebar} />
       <Sidebar open={sidebarOpen} onClose={closeSidebar} />
       <main
         className={`pt-18 ml-0 p-6 transition-all duration-300 ${

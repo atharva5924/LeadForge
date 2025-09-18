@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 
-const Navbar = ({ user, onLogout, onToggleSidebar }) => {
+const Navbar = ({ onLogout, onToggleSidebar }) => {
+  const [user, setUser] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axios.get("/auth/me", {
+        withCredentials: true,
+      });
+      setUser(response.data.user);
+    } catch (error) {
+      console.error("Error fetching current user:", error);
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (!user) {
+      fetchCurrentUser();
+    }
+    setShowProfile((prev) => !prev);
+  };
+
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 fixed w-full top-0 left-0 z-50">
       <div className="flex items-center h-16 px-6">
-        {/* Left: Hamburger menu and title */}
         <div className="flex items-center">
           <button
             aria-label="Toggle sidebar"
@@ -35,20 +56,41 @@ const Navbar = ({ user, onLogout, onToggleSidebar }) => {
         </div>
 
         <div className="flex-1" />
-
-        <div className="flex items-center space-x-4">
-          <UserCircleIcon className="h-6 w-6 text-gray-500" />
-          <span className="text-sm text-gray-700 select-none">
-            {user?.firstName} {user?.lastName}
-          </span>
+        <div className="relative">
           <button
-            onClick={onLogout}
-            className="flex items-center space-x-2 text-sm text-gray-700 hover:text-gray-900 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded transition"
-            type="button"
+            onClick={handleProfileClick}
+            className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           >
-            <ArrowRightOnRectangleIcon className="h-5 w-5" />
-            <span>Logout</span>
+            <UserCircleIcon className="h-8 w-8 text-gray-600" />
           </button>
+          {showProfile && (
+            <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-200 p-4 z-50">
+              {user ? (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">
+                    Profile Details
+                  </h3>
+                  <div className="mt-3 space-y-2 text-sm text-gray-700">
+                    <p>
+                      <strong>Name:</strong> {user.firstName} {user.lastName}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {user.email}
+                    </p>
+                  </div>
+                  <button
+                    onClick={onLogout}
+                    className="mt-4 w-full flex items-center justify-center space-x-2 text-sm bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+                  >
+                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <p className="text-center text-gray-500">Loading...</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </nav>
