@@ -11,17 +11,30 @@ import authRoutes from "./routes/auth.routes.js";
 import leadRoutes from "./routes/lead.routes.js";
 
 const app = express();
-
+const allowedOrigins = [
+  "https://lead-forge-frontend.vercel.app",
+  "http://localhost:3000",
+  "https://lead-forge-one.vercel.app"
+];
 // Middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin:"https://lead-forge-frontend.vercel.app", "http://localhost:3000", "https://lead-forge-one.vercel.app"
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://lead-forge-frontend.vercel.app"
-        : "http://localhost:3000",
+    origin: function(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
