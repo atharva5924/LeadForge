@@ -1,8 +1,16 @@
-# 📈 GripInvest Mini Investment Platform
+# 📈 LeadForge
 
-An AI-powered full-stack investment platform with user authentication, dynamic product recommendations, portfolio insights, transaction logging, and secure investment management.
+A full-stack Lead Management System built with React, Tailwind CSS, React Router, and Spring Boot backend. It provides a clean, responsive dashboard with sidebar navigation, real-time lead statistics, and detailed lead management features.
 
-**Tagline:** _"Invest smarter with AI-driven insights."_
+**Tagline:** _"Crafting connections, powering growth."_
+
+---
+
+### 🚀 Live Demo
+
+🔗 [Deployed Live on Vercel](https://inventory-pilot-frontend.vercel.app/)<br/>
+
+📡 [Backend Deploy Link](https://inventorypilot-backend-ib2e.onrender.com)
 
 ---
 
@@ -12,39 +20,25 @@ An AI-powered full-stack investment platform with user authentication, dynamic p
 
 ---
 
+
 ## 🌟 Features
 
-- 🔐 **JWT-based Auth**: Secure login and signup with token authentication
-- 📊 **Product Management**: Browse, add, and edit investment products
-- 💼 **Investment Tracking**: Create and view investments linked to products
-- 🤖 **AI Insights**: Personalized product recommendations and portfolio analysis powered by AI
-- 📋 **Transaction Logs**: Detailed API transaction logging for audit and analysis
-- 🌐 **Modern UI**: React + Tailwind CSS front end with smooth user experience
-- 🐳 **Containerized**: Docker setup for backend, frontend, and MySQL service
-- 📦 **API Documentation**: Easy-to-use RESTful endpoints with JSON responses
-
----
-
-## 🤖 AI Usage in GripInvest
-
-GripInvest leverages advanced AI capabilities to enhance the investment experience by providing intelligent insights and personalized recommendations:
-
-- **Password Strength Analysis:** During user signup, AI analyzes password strength using the Hugging Face API to promote better security with real-time feedback.
-- **Personalized Product Recommendations:** AI models recommend investment products tailored to each user’s risk appetite, age, and financial goals, enabling smarter investment decisions.
-- **Portfolio Insights and Risk Analysis:** Users receive AI-generated insights into their portfolio diversification, risk distribution, and expected returns for improved portfolio management.
-- **Error Log Summarization:** AI analyzes recent transaction error logs to identify patterns and provide actionable recommendations for system reliability improvements.
-
-These AI-driven features utilize external AI services via APIs to deliver a more dynamic, user-centric platform.
+- Responsive sidebar navigation with expandable/collapsible functionality.
+- Dynamic dashboard displaying total leads, new leads, qualified leads, and total value.
+- Color-coded lead statuses for clear visualization.
+- Authentication and authorization based on JWT tokens.
+- React Router v6 nested layout using Outlet for content rendering.
+- CRUD operations for leads with server-side API integration.
+- User-friendly interface with hamburger menu toggle for sidebar.
+- Styled with Tailwind CSS and Heroicons for modern UI.
 
 ---
 
 ## 📁 Tech Stack
 
-- **Frontend:** React, Tailwind CSS, React Router, React Query, React Hook Form, Vite
-- **Backend:** Node.js, Express.js, MySQL (mysql2/promise), JWT
-- **AI Services:** Hugging Face API integration
-- **Email:** Nodemailer SMTP Integration for password resets
-- **DevOps:** Docker, Docker Compose, Health Checks, Logging
+- **Frontend:** React.js, Tailwind CSS, React Router, Tailwind CSS, Heroicons, AG Grid, Axios, React Hot Toast, Vite
+- **Backend:** Node.js, Express.js, axios, bcrypt, cors, cookie-parser, dotenv, express-validator, nodemon
+- **Database:** MongoDB
 
 ---
 
@@ -53,7 +47,7 @@ These AI-driven features utilize external AI services via APIs to deliver a more
 ### 1. Clone the repo (frontend and backend)
 
 ```bash
-git clone https://github.com/atharva5924/gripinvest_winter_internship_backend.git
+git clone https://github.com/atharva5924/LeadForge.git
 ```
 
 ---
@@ -70,18 +64,9 @@ cd server
 
 ```env
 PORT=5000
-DB_HOST=mysql
-DB_USER=root
-DB_PASSWORD=Atha@7138
-DB_NAME=gripinvest_db
-JWT_SECRET=mySuperSecretKey
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password
-HUGGINGFACE_API_KEY=your_huggingface_key
-HF_TOKEN=your_huggingface_token
-CLIENT_ORIGIN=http://localhost:5173
+MONGODB_URI=your_mongodb_connection_string_here
+JWT_SECRET=your_secret_jwt_key_here_make_it_long_and_secure
+NODE_ENV=your_environment_here_development_or_production
 ```
 
 ```bash
@@ -108,29 +93,7 @@ npm install
 npm run dev
 ```
 
-Frontend runs at `http://localhost:5173/`
-
----
-
-### 4. Run with Docker Compose (Recommended)
-
-Project root (containing `docker-compose.yml`):
-
-```bash
-docker-compose up --build
-```
-
-Services started:
-
-- MySQL - port 3306
-- Backend API - port 5000
-- Frontend (Vite + Nginx) - port 5173
-
-To stop:
-
-```bash
-docker-compose down
-```
+Frontend runs at `http://localhost:3000/`
 
 ---
 
