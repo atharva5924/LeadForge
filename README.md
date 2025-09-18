@@ -207,11 +207,13 @@ View, add, update, or delete leads with status indicators.
 ![Leads List](./screenshots/leadsList.png)
 
 Create Leads
+![Leads List](./screenshots/create.png)
 
 Update Leads
+![Leads List](./screenshots/update.png)
 
 Delete Leads
-
+![Leads List](./screenshots/delete.png)
 
 ---
 
